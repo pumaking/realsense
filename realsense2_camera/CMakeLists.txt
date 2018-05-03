@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(realsense2_camera)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unknown-pragmas")
 option(BUILD_WITH_OPENMP "Use OpenMP" OFF)
 
 find_package(catkin REQUIRED COMPONENTS
