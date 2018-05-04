@@ -132,7 +132,7 @@ Processing enabled by this node:
             args="load depth_image_proc/point_cloud_xyz $(arg manager) $(arg bond)" respawn="$(arg respawn)">
         <remap from="camera_info"             to="/camera/depth/camera_info" />
         <remap from="image_rect" to="/camera/depth/image_rect_raw" />
-        <remap from="points"     to="/test/points_new" />
+        <remap from="points"     to="/$(arg depth_registered)/points_raw" />
       </node>
 
   </group>
