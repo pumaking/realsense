@@ -1,42 +1,3 @@
-<!--
-Copyright (c) 2018 Intel Corporation
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-     http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
--->
-
-<!--
-A launch file, derived from rgbd_launch and customized for Realsense ROS driver,
-to publish XYZRGB point cloud like an OpenNI camera.
-
-To launch Realsense with software registeration (ROS Image Pipeline and rgbd_launch):
-    $ roslaunch realsense2_camera rs_rgbd.launch
-Processing enabled by ROS driver:
-    # depth rectification
-Processing enabled by this node:
-    # rgb rectification
-    # depth registeration
-    # pointcloud_xyzrgb generation
-
-To launch Realsense with hardware registeration (ROS Realsense depth alignment):
-    $ roslaunch realsense2_camera rs_rgbd.launch align_depth:=true
-Processing enabled by ROS driver:
-    # depth rectification
-    # depth registration
-Processing enabled by this node:
-    # rgb rectification
-    # pointcloud_xyzrgb generation
--->
-
 <launch>
   <arg name="namespace"           default="camera"/>
   <arg name="manager"             default="realsense2_camera_manager"/>
@@ -136,9 +97,9 @@ Processing enabled by this node:
 
     <node pkg="nodelet" type="nodelet" name="points_xyz_hw_registered"
             args="load depth_image_proc/point_cloud_xyz $(arg manager) $(arg bond)" respawn="$(arg respawn)">
-        <remap from="camera_info"             to="/camera/depth/camera_info" />
-        <remap from="image_rect" to="/camera/depth/image_rect_raw" />
-        <remap from="points"     to="/$(arg depth_registered)/points_raw" />
+        <remap from="camera_info"             to="$(arg depth)/camera_info" />
+        <remap from="image_rect" to="$(arg depth)/image_rect_raw" />
+        <remap from="points"     to="/$(arg depth_registered_pub)/points_raw" />
       </node>
 
   </group>
