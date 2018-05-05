@@ -43,7 +43,17 @@ void RealSenseNodeFactory::onInit()
         auto privateNh = getPrivateNodeHandle();
         auto nh = getNodeHandle();
         std::string serial_no("");
+        int depth_preset = -1;
+        bool depth_auto_exposure = false;
         privateNh.param("serial_no", serial_no, std::string(""));
+        if(privateNh.hasParam("depth_preset"))
+        {
+            privateNh.getParam("depth_preset", depth_preset);
+        }
+        if(privateNh.hasParam("depth_auto_exposure"))
+        {
+            privateNh.getParam("depth_auto_exposure", depth_auto_exposure);
+        }
         bool found = false;
         for (auto&& dev : list)
         {

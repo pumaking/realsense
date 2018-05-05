@@ -7,12 +7,27 @@ RS435Node::RS435Node(ros::NodeHandle& nodeHandle,
                      ros::NodeHandle& privateNodeHandle,
                      rs2::device dev, const std::string& serial_no)
     : BaseD400Node(nodeHandle, privateNodeHandle, dev, serial_no)
-{}
+{
+    nh_  = nodeHandle;
+    pnh_ = privateNodeHandle;
+}
 
 void RS435Node::registerDynamicReconfigCb()
 {
     _f = boost::bind(&RS435Node::callback, this, _1, _2);
     _server.setCallback(_f);
+    int depth_preset = 0;
+    if (pnh_.hasParam("depth_preset"))
+    {
+        pnh_.getParam("depth_preset", depth_preset);
+        this->setDepthPreset(depth_preset);
+    }
+    bool exposure = 0;
+    if (pnh_.hasParam("depth_auto_exposure"))
+    {
+        pnh_.getParam("depth_auto_exposure", exposure);
+        this->setDepthAutoExposure(exposure);
+    }
 }
 
 void RS435Node::setParam(rs435_paramsConfig &config, rs435_param param)
@@ -105,9 +120,9 @@ void RS435Node::setParam(rs435_paramsConfig &config, rs435_param param)
 void RS435Node::callback(rs435_paramsConfig &config, uint32_t level)
 {
     ROS_DEBUG_STREAM("RS435Node - Level: " << level);
-
     if (set_default_dynamic_reconfig_values == level)
     {
+        bool depth_auto_exposure = false;
         for (int i = 1 ; i < rs435_param_count ; ++i)
         {
             ROS_DEBUG_STREAM("rs435_param = " << i);

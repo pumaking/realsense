@@ -39,6 +39,7 @@ namespace realsense2_camera
         virtual void registerDynamicReconfigCb() override;
 
     private:
+            ros::NodeHandle nh_, pnh_;
             void callback(rs435_paramsConfig &config, uint32_t level);
             void setParam(rs435_paramsConfig &config, rs435_param param);
 

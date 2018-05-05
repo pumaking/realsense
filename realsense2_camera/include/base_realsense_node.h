@@ -184,6 +184,8 @@ namespace realsense2_camera
                      ros::NodeHandle& privateNodeHandle,
                      rs2::device dev, const std::string& serial_no);
         virtual void registerDynamicReconfigCb() override;
+        void setDepthPreset(const int preset);
+        void setDepthAutoExposure(const bool exposure);
 
     protected:
         void setParam(rs415_paramsConfig &config, base_depth_param param);

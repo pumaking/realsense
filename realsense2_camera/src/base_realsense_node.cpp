@@ -1325,6 +1325,18 @@ void BaseD400Node::setParam(rs415_paramsConfig &config, base_depth_param param)
     setParam(base_config, param);
 }
 
+void BaseD400Node::setDepthPreset(const int preset)
+{
+    std::cout << "Setting Preset: " << preset << "\n";
+    setOption(DEPTH, RS2_OPTION_VISUAL_PRESET, preset);
+}
+
+void BaseD400Node::setDepthAutoExposure(const bool exposure)
+{
+    std::cout << "Setting Auto Exposure: " << exposure << "\n";
+    setOption(DEPTH, RS2_OPTION_ENABLE_AUTO_EXPOSURE, 1);
+}
+
 void BaseD400Node::setParam(base_d400_paramsConfig &config, base_depth_param param)
 {
     // W/O for zero param
