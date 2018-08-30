@@ -436,7 +436,7 @@ void BaseRealSenseNode::updateIsFrameArrived(std::map<stream_index_pair, bool>& 
     {
         is_frame_arrived.at({stream_type, stream_index}) = true;
     }
-    catch (std::out_of_range)
+    catch (const std::out_of_range&)
     {
         ROS_ERROR_STREAM("Stream type is not supported! (" << stream_type << ", " << stream_index << ")");
     }
@@ -1058,7 +1058,7 @@ void BaseRealSenseNode::publishRgbToDepthPCTopic(const ros::Time& t, const std::
             return;
         }
     }
-    catch (std::out_of_range)
+    catch (const std::out_of_range&)
     {
         ROS_DEBUG("Skipping publish PC topic! Color or Depth frame didn't configure.");
         return;
